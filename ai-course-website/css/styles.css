@@ -21,6 +21,62 @@
     --transition: all 0.3s ease;
 }
 
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+    from { 
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from { 
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    from { 
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes rotateIcon {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 body {
     font-family: 'Heebo', sans-serif;
     color: var(--text-color);
@@ -89,6 +145,7 @@ section {
     text-align: center;
     margin-bottom: 50px;
     position: relative;
+    animation: fadeIn 1s ease-out;
 }
 
 .section-title:after {
@@ -99,6 +156,7 @@ section {
     background: var(--primary-color);
     margin: 15px auto 0;
     border-radius: 2px;
+    animation: slideInFromLeft 0.8s ease-out forwards;
 }
 
 /* BUTTONS */
@@ -117,6 +175,7 @@ section {
     background-color: var(--primary-color);
     color: var(--white);
     border: 2px solid var(--primary-color);
+    animation: pulse 2s infinite;
 }
 
 .btn-primary:hover {
@@ -125,6 +184,7 @@ section {
     color: var(--white);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    animation: none;
 }
 
 .btn-secondary {
@@ -163,6 +223,7 @@ section {
     font-size: 1.8rem;
     margin-bottom: 0;
     color: var(--primary-color);
+    animation: fadeIn 0.8s ease-out;
 }
 
 .logo span {
@@ -174,6 +235,17 @@ section {
     display: flex;
     gap: 20px;
 }
+
+.nav li {
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.nav li:nth-child(1) { animation-delay: 0.1s; }
+.nav li:nth-child(2) { animation-delay: 0.2s; }
+.nav li:nth-child(3) { animation-delay: 0.3s; }
+.nav li:nth-child(4) { animation-delay: 0.4s; }
+.nav li:nth-child(5) { animation-delay: 0.5s; }
 
 .nav li a {
     color: var(--text-color);
@@ -197,15 +269,42 @@ section {
     overflow: hidden;
 }
 
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.05);
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(58, 12, 163, 0.05);
+    animation: float 8s ease-in-out infinite reverse;
+}
+
 .hero .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
     flex: 1;
+    animation: slideInFromRight 0.8s ease-out;
 }
 
 .hero-content h1 {
@@ -228,6 +327,7 @@ section {
 .hero-image {
     flex: 1;
     position: relative;
+    animation: slideInFromLeft 0.8s ease-out;
 }
 
 .image-placeholder {
@@ -240,6 +340,7 @@ section {
     justify-content: center;
     overflow: hidden;
     position: relative;
+    animation: float 6s ease-in-out infinite;
 }
 
 /* ABOUT SECTION */
@@ -260,7 +361,14 @@ section {
     box-shadow: var(--shadow);
     transition: var(--transition);
     text-align: center;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
 }
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
 
 .feature-card:hover {
     transform: translateY(-10px);
@@ -270,6 +378,12 @@ section {
 .feature-icon {
     font-size: 2.5rem;
     margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+    display: inline-block;
+}
+
+.feature-icon:hover {
+    animation: rotateIcon 1s ease-in-out;
 }
 
 .feature-card h3 {
@@ -295,13 +409,23 @@ section {
     right: 20px;
     width: 3px;
     background: var(--primary-color);
+    animation: slideInFromBottom 1s ease-out;
 }
 
 .timeline-item {
     display: flex;
     margin-bottom: 40px;
     position: relative;
+    animation: slideInFromRight 0.5s ease-out forwards;
+    opacity: 0;
 }
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
 
 .timeline-number {
     width: 44px;
@@ -316,6 +440,7 @@ section {
     margin-left: 20px;
     position: relative;
     z-index: 1;
+    animation: pulse 2s infinite;
 }
 
 .timeline-content {
@@ -836,4 +961,98 @@ section {
         align-items: center;
         text-align: center;
     }
+}
+
+/* Add after the existing animations section */
+
+.visible .section-title,
+.visible .features,
+.visible .timeline,
+.visible .pricing-cards,
+.visible .contact-container,
+.visible .accordion {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.animate {
+    animation: slideInFromBottom 0.5s ease-out forwards !important;
+    opacity: 1 !important;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero.loaded .hero-content h1 {
+    animation: slideInFromRight 0.8s ease-out forwards;
+}
+
+.hero.loaded .hero-content p {
+    animation: slideInFromRight 1s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.hero.loaded .cta-buttons {
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
+}
+
+/* Testimonial animations */
+.testimonial-card {
+    transition: all 0.5s ease;
+}
+
+.testimonial-card.active {
+    animation: slideInFromRight 0.5s ease-out forwards;
+}
+
+/* Pricing card animations */
+.pricing-card.featured {
+    animation: pulse 3s infinite;
+}
+
+.pricing-badge {
+    animation: fadeIn 1s ease-out forwards, pulse 2s infinite 1s;
+}
+
+/* Form animations */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    animation: pulse 1s ease-out;
+}
+
+.btn-primary[type="submit"] {
+    transition: all 0.3s ease;
+}
+
+.btn-primary[type="submit"]:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* Footer animations */
+.footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+    animation: slideInFromLeft 1.5s ease-out;
+}
+
+.social-link:hover {
+    animation: pulse 0.5s ease-out;
 } 

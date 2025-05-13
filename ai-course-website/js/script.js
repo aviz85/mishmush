@@ -44,7 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Auto slide every 5 seconds
-    setInterval(nextSlide, 5000);
+    let slideInterval = setInterval(nextSlide, 5000);
+
+    // Pause slider on hover
+    const testimonialSlider = document.querySelector('.testimonial-slider');
+    testimonialSlider.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    
+    testimonialSlider.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(nextSlide, 5000);
+    });
 
     // FAQ Accordion
     const accordionItems = document.querySelectorAll('.accordion-item');
@@ -118,29 +128,92 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add animation on scroll
-    const animateElements = document.querySelectorAll('.feature-card, .timeline-item, .pricing-card');
+    // Enhanced animations on scroll
+    const animateSections = document.querySelectorAll('section');
+    const animateElements = document.querySelectorAll('.feature-card, .timeline-item, .pricing-card, .testimonial-card, .accordion-item');
     
     function checkIfInView() {
+        const triggerBottom = window.innerHeight * 0.8;
+        
+        // Animate sections
+        animateSections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            
+            if (sectionTop < triggerBottom) {
+                section.classList.add('visible');
+            }
+        });
+        
+        // Animate elements
         animateElements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
             
-            if (elementTop < windowHeight - 100) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
+            if (elementTop < triggerBottom) {
+                element.classList.add('animate');
             }
         });
     }
     
-    // Initial setup for animation
-    animateElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    // Pricing cards hover effect
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    
+    pricingCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            if (!card.classList.contains('featured')) {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+                card.style.zIndex = '1';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            if (!card.classList.contains('featured')) {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+                card.style.zIndex = '';
+            }
+        });
     });
     
-    // Check elements when page loads and on scroll
+    // Animate elements when they come into view
     window.addEventListener('load', checkIfInView);
     window.addEventListener('scroll', checkIfInView);
+    
+    // Initial animations for elements above the fold
+    setTimeout(() => {
+        document.querySelector('.hero').classList.add('loaded');
+    }, 300);
+    
+    // Particles animation in hero section (create floating shapes)
+    const hero = document.querySelector('.hero');
+    createParticles(hero, 5);
+    
+    function createParticles(container, count) {
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random styling
+            const size = Math.random() * 50 + 20; // 20-70px
+            const posX = Math.random() * 100; // 0-100%
+            const posY = Math.random() * 100; // 0-100%
+            const duration = Math.random() * 20 + 10; // 10-30s
+            const delay = Math.random() * 5; // 0-5s
+            
+            // Apply styles
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.right = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            particle.style.opacity = '0.05';
+            particle.style.position = 'absolute';
+            particle.style.borderRadius = '50%';
+            particle.style.background = 'var(--primary-color)';
+            particle.style.animation = 'float 15s infinite ease-in-out';
+            
+            container.appendChild(particle);
+        }
+    }
 }); 
